@@ -7,13 +7,11 @@ KF="${BASH_SOURCE[0]}"
 # KF_PODS_EXTRA_ARGS='-o wide'
 
 generic() {
-  set -x
   resource=$1
   shift
   ARGS_VAR="KF_${resource^^}_EXTRA_ARGS"
   EXTRA_ARGS="${!ARGS_VAR:-}"
   export FZF_DEFAULT_COMMAND="grc --colour=on kubectl get ${resource} -A $EXTRA_ARGS"
-  set +x
   fzf --header-lines=1 --reverse --info=inline --height=100% \
     --prompt "${resource} > " \
     --header $'/ Ctrl-r (reload) / Ctrl-d (describe) / Return (open manifest in vim) /\n\n' \
